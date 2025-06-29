@@ -32,9 +32,22 @@ export class Cube {
   }
 
   /** Resets cube to solved state */
-  public reset(): void {
-    this.constructor(); // Reinitialize
-  }
+//   public reset(): void {
+//     this.constructor(); // Reinitialize
+//   }
+// src/cube/Cube.ts
+
+public reset(): void {
+  this.faces = {
+    U: Array(9).fill('w'),
+    D: Array(9).fill('y'),
+    L: Array(9).fill('o'),
+    R: Array(9).fill('r'),
+    F: Array(9).fill('g'),
+    B: Array(9).fill('b'),
+  };
+}
+
 
   /** Sets cube state manually (for testing/debugging) */
   public setState(state: Record<Face, Color[]>): void {
