@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { Cube, Face } from './cube/Cube';
+import CubeRenderer from './components/CubeRenderer';
+
+const cube = new Cube(); // Single instance across renders
 
 function App() {
+  const [cubeState, setCubeState] = useState(cube.getFlatColorsString());
+
+  const handleRotate = (face: Face) => {
+    cube.rotate(face, true); // Rotate clockwise
+    setCubeState(cube.getFlatColorsString());
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Rubik's Cube Visualizer</h1>
+
+      <CubeRenderer cubeString={cubeState} />
+
+      <div style={{ marginTop: '20px' }}>
+        {(['U', 'D', 'L', 'R', 'F', 'B'] as Face[]).map(face => (
+          <button
+            key={face}
+            style={{ margin: '4px' }}
+            onClick={() => handleRotate(face)}
+          >
+            Rotate {face}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
